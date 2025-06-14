@@ -1,0 +1,17 @@
+when:
+  instance: ci.kokuwa.io
+  repo: woodpecker/buildctl
+  event: [manual, push]
+  branch: main
+  path: [.woodpecker/dockerhub.yaml, README.md]
+
+steps:
+
+  metadata:
+    image: kokuwaio/dockerhub-metadata
+    settings:
+      repository: kokuwaio/buildctl
+      description-short: A WoodpeckerCI plugin for buildctl to build container images using a remote builtkitd instance.
+      categories: [developer-tools, integration-and-delivery]
+      username: {from_secret: dockerhub_username}
+      password: {from_secret: dockerhub_password}
