@@ -1,0 +1,36 @@
+when:
+  instance: ci.kokuwa.io
+  repo: woodpecker/buildctl
+  event: [manual, push, pull_request]
+  branch: main
+  path: [.woodpecker/build.yaml, Dockerfile, Dockerfile.dockerignore, entrypoint.sh]
+
+depends_on: [build]
+matrix:
+  PLATFORM: [amd64, arm64]
+labels:
+  platform: linux/${PLATFORM}
+
+steps:
+
+  pr:
+    image: registry.kokuwa.io/kokuwaio/buildctl:ci-${CI_PIPELINE_NUMBER}
+    commands: buildctl --version
+    when:
+      event: pull_request
+
+  kokuwa.io: &version
+    image: registry.kokuwa.io/kokuwaio/buildctl
+    pull: true
+    commands: buildctl --version
+    when:
+      event: [manual, push]
+      branch: main
+
+  docker.io:
+    image: docker.io/kokuwaio/buildctl
+    <<: *version
+
+  ghcr.io:
+    image: ghcr.io/kokuwaio/buildctl
+    <<: *version
