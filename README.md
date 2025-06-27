@@ -72,21 +72,21 @@ docker run --rm --user=$(id -u) --volume=$HOME:$HOME:ro --workdir=$PWD --env=PLU
 
 ## Settings
 
-| Settings Name       | Environment              | Default          | Description                                                                                     |
-| ------------------- | ------------------------ | ---------------- | ----------------------------------------------------------------------------------------------- |
-| `addr`              | PLUGIN_ADDR              | `$BUILDKIT_HOST` | Buildkit host to use.                                                                           |
-| `frontend`          | PLUGIN_FRONTEND          | `dockerfile.v0`  | Only dockerfile frontend supported right now                                                    |
-| `context`           | PLUGIN_CONTEXT           | `$PWD`           | Context directory to use for build                                                              |
-| `dockerfile`        | PLUGIN_DOCKERFILE        | `Dockerfile`     | Dockerfile to use.                                                                              |
-| `target`            | PLUGIN_TARGET            | `none`           | Dockerfile target                                                                               |
-| `build-args`        | PLUGIN_BUILD_ARGS        | `none`           | Build args to pass to build                                                                     |
-| `platform`          | PLUGIN_PLATFORM          | `none`           | Target platform for container image.                                                            |
-| `source-epoch-date` | PLUGIN_SOURCE_DATE_EPOCH | `0`              | Timestamp to use for reproduceable builds.                                                      |
-| `name`              | PLUGIN_NAME              | `none`           | Images names where to push the image.                                                           |
-| `annotation`        | PLUGIN_ANNOTATION        | `none`           | Annotations (also known as labels) to add to image                                              |
-| `push`              | PLUGIN_PUSH              | `true`           | Push images if output names are set.                                                            |
-| `auth`              | PLUGIN_AUTH              | `none`           | Auth for private registries                                                                     |
-| `env-file`          | PLUGIN_ENV_FILE          | `none`           | Source environment values from given file                                                       |
+| Settings Name       | Environment              | Default                     | Description                                        |
+| ------------------- | ------------------------ | --------------------------- | -------------------------------------------------- |
+| `addr`              | PLUGIN_ADDR              | `$BUILDKIT_HOST`            | Buildkit host to use.                              |
+| `frontend`          | PLUGIN_FRONTEND          | `dockerfile.v0`             | Only dockerfile frontend supported right now       |
+| `context`           | PLUGIN_CONTEXT           | `$PWD`                      | Context directory to use for build                 |
+| `dockerfile`        | PLUGIN_DOCKERFILE        | `Dockerfile`                | Dockerfile to use.                                 |
+| `target`            | PLUGIN_TARGET            | `none`                      | Dockerfile target                                  |
+| `build-args`        | PLUGIN_BUILD_ARGS        | `none`                      | Build args to pass to build                        |
+| `platform`          | PLUGIN_PLATFORM          | `none`                      | Target platform for container image.               |
+| `source-epoch-date` | PLUGIN_SOURCE_DATE_EPOCH | `git log -1 --format="%at"` | Timestamp to use for reproduceable builds.         |
+| `name`              | PLUGIN_NAME              | `none`                      | Images names where to push the image.              |
+| `annotation`        | PLUGIN_ANNOTATION        | `none`                      | Annotations (also known as labels) to add to image |
+| `push`              | PLUGIN_PUSH              | `true`                      | Push images if output names are set.               |
+| `auth`              | PLUGIN_AUTH              | `none`                      | Auth for private registries                        |
+| `env-file`          | PLUGIN_ENV_FILE          | `none`                      | Source environment values from given file          |
 
 ## Alternatives
 

@@ -6,6 +6,10 @@
 FROM docker.io/library/bash:5.2.37@sha256:01a15c6f48f6a3c08431cd77e11567823530b18159889dca3b7309b707beef91
 SHELL ["/usr/local/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 
+# workaround until we have a env `CI_COMMIT_TIMESTAMP`
+# see https://github.com/woodpecker-ci/woodpecker/issues/5245
+RUN apk add git~=2 --no-cache
+
 RUN ARCH=$(uname -m) && \
 	[[ $ARCH == x86_64 ]] && export SUFFIX=amd64; \
 	[[ $ARCH == aarch64 ]] && export SUFFIX=arm64; \

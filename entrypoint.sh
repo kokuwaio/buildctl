@@ -2,6 +2,16 @@
 set -eu;
 
 ##
+## workaround until we have a env `CI_COMMIT_TIMESTAMP`
+## see https://github.com/woodpecker-ci/woodpecker/issues/5245
+##
+
+if [[ -z "${CI_COMMIT_TIMESTAMP:-}" ]]; then
+	git config --global --add safe.directory "$PWD"
+	CI_COMMIT_TIMESTAMP=$(git log -1 --format="%at")
+fi
+
+##
 ## check input
 ##
 
@@ -27,7 +37,7 @@ if [[ "$BUILDCTL_FRONTEND" != "dockerfile.v0" ]]; then
 	exit 1
 fi
 
-SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-0}
+SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-${CI_COMMIT_TIMESTAMP:-0}}
 
 if [[ -n "${PLUGIN_AUTH:-}" ]]; then
 	echo "$PLUGIN_AUTH" | jq -r 'to_entries|map({(.key):{"auth":(.value.username+":"+.value.password)|@base64}})|add|{"auths":.}' > "$HOME/.docker/config.json"
