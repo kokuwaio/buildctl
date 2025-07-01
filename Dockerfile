@@ -14,7 +14,7 @@ RUN ARCH=$(uname -m) && \
 	[[ $ARCH == x86_64 ]] && export SUFFIX=amd64; \
 	[[ $ARCH == aarch64 ]] && export SUFFIX=arm64; \
 	[[ -z ${SUFFIX:-} ]] && echo "Unknown arch: $ARCH" && exit 1; \
-	wget -q "https://github.com/jqlang/jq/releases/download/jq-1.8.0/jq-linux-$SUFFIX" --output-document=/usr/local/bin/jq && \
+	wget -q "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$SUFFIX" --output-document=/usr/local/bin/jq && \
 	chmod 555 /usr/local/bin/jq
 
 RUN ARCH=$(uname -m) && \
