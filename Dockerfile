@@ -21,7 +21,7 @@ RUN ARCH=$(uname -m) && \
 	[[ $ARCH == x86_64 ]] && export SUFFIX=amd64; \
 	[[ $ARCH == aarch64 ]] && export SUFFIX=arm64; \
 	[[ -z ${SUFFIX:-} ]] && echo "Unknown arch: $ARCH" && exit 1; \
-	wget -q "https://github.com/moby/buildkit/releases/download/v0.23.1/buildkit-v0.23.1.linux-$SUFFIX.tar.gz" --output-document=- | tar --gz --extract --directory=/usr/local bin/buildctl && \
+	wget -q "https://github.com/moby/buildkit/releases/download/v0.23.2/buildkit-v0.23.2.linux-$SUFFIX.tar.gz" --output-document=- | tar --gz --extract --directory=/usr/local bin/buildctl && \
 	chmod 555 /usr/local/bin/buildctl
 
 COPY --chmod=555 entrypoint.sh /usr/local/bin/entrypoint.sh
