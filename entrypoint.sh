@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -eu;
 
+## workaround until we have a env `CI_COMMIT_TIMESTAMP`
+## see https://github.com/woodpecker-ci/woodpecker/issues/5245
+if [[ -z "${CI_COMMIT_TIMESTAMP:-}" ]]; then
+	git config --global --add safe.directory "$PWD"
+	CI_COMMIT_TIMESTAMP=$(git log -1 --format="%at")
+fi
+
 ##
 ## check input
 ##
@@ -54,12 +61,6 @@ if [[ -n  "${PLUGIN_BUILD_ARGS:-}" ]]; then
 	COMMAND+="$(eval "echo \"${PLUGIN_BUILD_ARGS//\"/\\\"}\"" | jq --join-output 'keys[] as $k|" --opt=build-arg:\($k)=\(.[$k])"')"
 fi
 if [[ "${PLUGIN_REPRODUCIBLE:-true}" == "true" ]]; then
-	## workaround until we have a env `CI_COMMIT_TIMESTAMP`
-	## see https://github.com/woodpecker-ci/woodpecker/issues/5245
-	if [[ -z "${CI_COMMIT_TIMESTAMP:-}" ]]; then
-		git config --global --add safe.directory "$PWD"
-		CI_COMMIT_TIMESTAMP=$(git log -1 --format="%at")
-	fi
 	COMMAND+=" --opt=build-arg:SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-$CI_COMMIT_TIMESTAMP}"
 fi
 
@@ -78,7 +79,7 @@ if [[ -n "${PLUGIN_NAME:-}" ]]; then
 	fi
 	OUTPUT+=",push=${PLUGIN_PUSH:-true},oci-mediatypes=true,compression=estargz,compression-level=9"
 	if [[ "${PLUGIN_REPRODUCIBLE:-true}" == "true" ]]; then
-		COMMAND+=",rewrite-timestamp=true"
+		OUTPUT+=",rewrite-timestamp=true"
 	fi
 	COMMAND+=" --output='$OUTPUT'"
 fi
@@ -96,7 +97,9 @@ if [[ -n  "${PLUGIN_TARGET:-}" ]]; then
 fi
 echo "    --no-cache \\"
 echo "    --provenance=false \\"
-echo "    --build-arg=SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH \\"
+if [[ "${PLUGIN_REPRODUCIBLE:-true}" == "true" ]]; then
+	echo "    --build-arg=SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-$CI_COMMIT_TIMESTAMP} \\"
+fi
 if [[ -n  "${PLUGIN_PLATFORM:-}" ]]; then
 	echo "    --platform=$PLUGIN_PLATFORM \\"
 fi
