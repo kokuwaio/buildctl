@@ -42,7 +42,6 @@ steps:
         https://index.docker.io/v1/":
           username: {from_secret: docker_io_username}
           password: {from_secret: docker_io_password}
-
 ```
 
 Gitlab:

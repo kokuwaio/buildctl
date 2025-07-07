@@ -8,7 +8,7 @@ when:
 steps:
 
   build:
-    image: kokuwaio/buildctl
+    image: kokuwaio/buildctl:v0.23.2
     settings: &settings
       name: registry.kokuwa.io/kokuwaio/buildctl:ci-${CI_PIPELINE_NUMBER}
       auth:
@@ -31,16 +31,16 @@ steps:
       event: pull_request
 
   push:
-    image: kokuwaio/buildctl
+    image: kokuwaio/buildctl:v0.23.2
     settings:
       <<: *settings
       name:
-        - registry.kokuwa.io/kokuwaio/buildctl:latest
         - registry.kokuwa.io/kokuwaio/buildctl:v0.23.2
-        - docker.io/kokuwaio/buildctl:latest
+        - registry.kokuwa.io/kokuwaio/buildctl:latest
         - docker.io/kokuwaio/buildctl:v0.23.2
-        - ghcr.io/kokuwaio/buildctl:latest
+        - docker.io/kokuwaio/buildctl:latest
         - ghcr.io/kokuwaio/buildctl:v0.23.2
+        - ghcr.io/kokuwaio/buildctl:latest
       auth:
         "https://index.docker.io/v1/":
           username: {from_secret: docker_io_username}
