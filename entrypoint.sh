@@ -2,16 +2,6 @@
 set -eu;
 
 ##
-## workaround until we have a env `CI_COMMIT_TIMESTAMP`
-## see https://github.com/woodpecker-ci/woodpecker/issues/5245
-##
-
-if [[ -z "${CI_COMMIT_TIMESTAMP:-}" ]]; then
-	git config --global --add safe.directory "$PWD"
-	CI_COMMIT_TIMESTAMP=$(git log -1 --format="%at")
-fi
-
-##
 ## check input
 ##
 
@@ -36,8 +26,6 @@ if [[ "$BUILDCTL_FRONTEND" != "dockerfile.v0" ]]; then
 	echo "Only frontend 'dockerfile.v0' tested and supported yet."
 	exit 1
 fi
-
-SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-${CI_COMMIT_TIMESTAMP:-0}}
 
 if [[ -n "${PLUGIN_AUTH:-}" ]]; then
 	echo "$PLUGIN_AUTH" | jq -r 'to_entries|map({(.key):{"auth":(.value.username+":"+.value.password)|@base64}})|add|{"auths":.}' > "$HOME/.docker/config.json"
@@ -65,7 +53,15 @@ fi
 if [[ -n  "${PLUGIN_BUILD_ARGS:-}" ]]; then
 	COMMAND+="$(eval "echo \"${PLUGIN_BUILD_ARGS//\"/\\\"}\"" | jq --join-output 'keys[] as $k|" --opt=build-arg:\($k)=\(.[$k])"')"
 fi
-COMMAND+=" --opt=build-arg:SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH"
+if [[ "${PLUGIN_REPRODUCIBLE:-true}" == "true" ]]; then
+	## workaround until we have a env `CI_COMMIT_TIMESTAMP`
+	## see https://github.com/woodpecker-ci/woodpecker/issues/5245
+	if [[ -z "${CI_COMMIT_TIMESTAMP:-}" ]]; then
+		git config --global --add safe.directory "$PWD"
+		CI_COMMIT_TIMESTAMP=$(git log -1 --format="%at")
+	fi
+	COMMAND+=" --opt=build-arg:SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-$CI_COMMIT_TIMESTAMP}"
+fi
 
 # https://github.com/moby/buildkit/blob/master/README.md#output
 if [[ -n "${PLUGIN_NAME:-}" ]]; then
@@ -80,7 +76,10 @@ if [[ -n "${PLUGIN_NAME:-}" ]]; then
 	if [[ -n "${PLUGIN_ANNOTATION:-}" ]]; then
 		OUTPUT+="$(eval "echo \"${PLUGIN_ANNOTATION//\"/\\\"}\"" | jq --join-output 'keys[] as $k|",annotation.\($k)=\(.[$k])"')"
 	fi
-	OUTPUT+=",push=${PLUGIN_PUSH:-true},oci-mediatypes=true,compression=estargz,compression-level=9,rewrite-timestamp=true"
+	OUTPUT+=",push=${PLUGIN_PUSH:-true},oci-mediatypes=true,compression=estargz,compression-level=9"
+	if [[ "${PLUGIN_REPRODUCIBLE:-true}" == "true" ]]; then
+		COMMAND+=",rewrite-timestamp=true"
+	fi
 	COMMAND+=" --output='$OUTPUT'"
 fi
 

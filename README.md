@@ -12,7 +12,7 @@ Also usable with Gitlab, Github or locally, see examples for usage.
 
 ## Features
 
-- preconfigured for [reproduceable builds](https://github.com/moby/buildkit/blob/master/docs/build-repro.md)
+- preconfigured for [reproducible builds](https://github.com/moby/buildkit/blob/master/docs/build-repro.md)
 - attestations not yet supported because of [github.com/moby/buildkit/issues/3552](https://github.com/moby/buildkit/issues/3552)
 - runnable with local buildkit daemon
 
@@ -80,7 +80,8 @@ docker run --rm --user=$(id -u) --volume=$HOME:$HOME:ro --workdir=$PWD --env=PLU
 | `target`            | PLUGIN_TARGET            | `none`                      | Dockerfile target                                  |
 | `build-args`        | PLUGIN_BUILD_ARGS        | `none`                      | Build args to pass to build                        |
 | `platform`          | PLUGIN_PLATFORM          | `none`                      | Target platform for container image.               |
-| `source-epoch-date` | PLUGIN_SOURCE_DATE_EPOCH | `git log -1 --format="%at"` | Timestamp to use for reproduceable builds.         |
+| `reproducible`      | PLUGIN_REPRODUCIBLE      | `true`                      | Build with reproducible settings.                 |
+| `source-epoch-date` | PLUGIN_SOURCE_DATE_EPOCH | `git log -1 --format="%at"` | Timestamp to use for reproducible builds.         |
 | `name`              | PLUGIN_NAME              | `none`                      | Images names where to push the image.              |
 | `annotation`        | PLUGIN_ANNOTATION        | `none`                      | Annotations (also known as labels) to add to image |
 | `push`              | PLUGIN_PUSH              | `true`                      | Push images if output names are set.               |
