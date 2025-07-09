@@ -91,7 +91,7 @@ fi
 echo
 echo Reproduce with docker:
 echo
-echo "  docker buildx build ${PLUGIN_CONTEXT:-.} \\"
+echo "  docker buildx build $BUILDCTL_CONTEXT \\"
 if [[ -n  "${PLUGIN_TARGET:-}" ]]; then
 	echo "    --target=$PLUGIN_TARGET \\"
 fi
