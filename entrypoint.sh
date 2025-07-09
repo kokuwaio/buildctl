@@ -4,7 +4,7 @@ set -eu;
 ## workaround until we have a env `CI_COMMIT_TIMESTAMP`
 ## see https://github.com/woodpecker-ci/woodpecker/issues/5245
 if [[ -z "${CI_COMMIT_TIMESTAMP:-}" ]]; then
-	git config --global --add safe.directory "$PWD"
+	git config --global --add safe.directory "$CI_WORKSPACE"
 	CI_COMMIT_TIMESTAMP=$(git log -1 --format="%at")
 fi
 
