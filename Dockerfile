@@ -10,18 +10,12 @@ SHELL ["/usr/local/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 # see https://github.com/woodpecker-ci/woodpecker/issues/5245
 RUN apk add git~=2 --no-cache
 
-RUN ARCH=$(uname -m) && \
-	[[ $ARCH == x86_64 ]] && export SUFFIX=amd64; \
-	[[ $ARCH == aarch64 ]] && export SUFFIX=arm64; \
-	[[ -z ${SUFFIX:-} ]] && echo "Unknown arch: $ARCH" && exit 1; \
-	wget -q "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$SUFFIX" --output-document=/usr/local/bin/jq && \
+ARG TARGETARCH
+RUN wget -q "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$TARGETARCH" --output-document=/usr/local/bin/jq && \
 	chmod 555 /usr/local/bin/jq
 
-RUN ARCH=$(uname -m) && \
-	[[ $ARCH == x86_64 ]] && export SUFFIX=amd64; \
-	[[ $ARCH == aarch64 ]] && export SUFFIX=arm64; \
-	[[ -z ${SUFFIX:-} ]] && echo "Unknown arch: $ARCH" && exit 1; \
-	wget -q "https://github.com/moby/buildkit/releases/download/v0.23.2/buildkit-v0.23.2.linux-$SUFFIX.tar.gz" --output-document=- | tar --gz --extract --directory=/usr/local bin/buildctl && \
+RUN wget -q "https://github.com/moby/buildkit/releases/download/v0.23.2/buildkit-v0.23.2.linux-$TARGETARCH.tar.gz" --output-document=- | \
+	tar --gz --extract --directory=/usr/local bin/buildctl && \
 	chmod 555 /usr/local/bin/buildctl
 
 COPY --chmod=555 entrypoint.sh /usr/local/bin/entrypoint.sh
