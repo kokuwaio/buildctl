@@ -23,7 +23,8 @@ WoodpeckerCI:
 ```yaml
 steps:
   buildctl:
-    image: kokuwaio/buildctl
+    depends_on: []
+    image: kokuwaio/buildctl:v0.24.0
     settings:
       name:
         - registry.example.org/foo:latest
@@ -44,12 +45,16 @@ steps:
           password: {from_secret: docker_io_password}
 ```
 
-Gitlab:
+Gitlab: (using script is needed because of <https://gitlab.com/gitlab-org/gitlab/-/issues/19717>)
 
 ```yaml
 buildctl:
+  needs: []
   stage: lint
-  image: kokuwaio/buildctl
+  image:
+    name: kokuwaio/buildctbuildctl:v0.24.0
+    entrypoint: [""]
+  script: [/usr/local/bin/entrypoint.sh]
   variables:
     PLUGIN_ADDR: tcp://0.8.1.5:1234
     PLUGIN_NAME: registry.example.org/foo:latest,registry.example.org/foo:0.0.1
@@ -57,7 +62,6 @@ buildctl:
     PLUGIN_AUTH: '{"registry.example.org":{"username":"my-user","password":"changeMe"}}'
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      changes: [.buildctl.yaml, "**/*.y*ml"]
 ```
 
 CLI (will reuse docker credentials of current user):

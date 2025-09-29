@@ -15,8 +15,8 @@
 
 # Build image with local docker daemon.
 @build:
-	docker buildx build . --build-arg=NPM_CONFIG_REGISTRY --platform=linux/amd64,linux/arm64
+	docker buildx build . --platform=linux/amd64,linux/arm64
 
 # Inspect image layers with `dive`.
-@dive TARGET="":
-	dive build . --build-arg=NPM_CONFIG_REGISTRY --target={{TARGET}}
+@dive:
+	dive build .
