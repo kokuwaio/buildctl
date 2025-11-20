@@ -7,7 +7,7 @@
 [![prs](https://img.shields.io/gitea/pull-requests/open/woodpecker/buildctl?gitea_url=https%3A%2F%2Fgit.kokuwa.io)](https://git.kokuwa.io/woodpecker/buildctl/pulls)
 [![issues](https://img.shields.io/gitea/issues/open/woodpecker/buildctl?gitea_url=https%3A%2F%2Fgit.kokuwa.io)](https://git.kokuwa.io/woodpecker/buildctl/issues)
 
-A [WoodpeckerCI](https://woodpecker-ci.org) plugin for [buildctl](https://github.com/moby/buildkit) to build container images using a remote buildkit host.  
+A [WoodpeckerCI](https://woodpecker-ci.org) plugin for [buildctl](https://github.com/moby/buildkit) to build container images using a remote buildkit host.
 Also usable with Gitlab, Github or locally, see examples for usage.
 
 ## Features
@@ -38,11 +38,11 @@ steps:
       platform: [linux/amd64, linux/arm64]
       auth:
         registry.example.org:
-          username: {from_secret: my_username}
-          password: {from_secret: my_password}
+          username: { from_secret: my_username }
+          password: { from_secret: my_password }
         https://index.docker.io/v1/":
-          username: {from_secret: docker_io_username}
-          password: {from_secret: docker_io_password}
+          username: { from_secret: docker_io_username }
+          password: { from_secret: docker_io_password }
 ```
 
 Gitlab: (using script is needed because of <https://gitlab.com/gitlab-org/gitlab/-/issues/19717>)
@@ -84,8 +84,8 @@ docker run --rm --user=$(id -u) --volume=$HOME:$HOME:ro --workdir=$PWD --env=PLU
 | `target`            | PLUGIN_TARGET            | `none`                      | Dockerfile target                                  |
 | `build-args`        | PLUGIN_BUILD_ARGS        | `none`                      | Build args to pass to build                        |
 | `platform`          | PLUGIN_PLATFORM          | `none`                      | Target platform for container image.               |
-| `reproducible`      | PLUGIN_REPRODUCIBLE      | `true`                      | Build with reproducible settings.                 |
-| `source-epoch-date` | PLUGIN_SOURCE_DATE_EPOCH | `git log -1 --format="%at"` | Timestamp to use for reproducible builds.         |
+| `reproducible`      | PLUGIN_REPRODUCIBLE      | `true`                      | Build with reproducible settings.                  |
+| `source-epoch-date` | PLUGIN_SOURCE_DATE_EPOCH | `git log -1 --format="%at"` | Timestamp to use for reproducible builds.          |
 | `name`              | PLUGIN_NAME              | `none`                      | Images names where to push the image.              |
 | `annotation`        | PLUGIN_ANNOTATION        | `none`                      | Annotations (also known as labels) to add to image |
 | `push`              | PLUGIN_PUSH              | `true`                      | Push images if output names are set.               |
@@ -94,10 +94,10 @@ docker run --rm --user=$(id -u) --volume=$HOME:$HOME:ro --workdir=$PWD --env=PLU
 
 ## Alternatives
 
-| Image                                                           | Comment                           | amd64 | arm64 |
-| --------------------------------------------------------------- | --------------------------------- |:-----:|:-----:|
+| Image                                                           | Comment                           |                                                                amd64                                                                |                                                                arm64                                                                |
+| --------------------------------------------------------------- | --------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------: |
 | [kokuwaio/buildctl](https://hub.docker.com/r/kokuwaio/buildctl) | Woodpecker plugin                 | [![size](https://img.shields.io/docker/image-size/kokuwaio/buildctl?arch=amd64&label=)](https://hub.docker.com/r/kokuwaio/buildctl) | [![size](https://img.shields.io/docker/image-size/kokuwaio/buildctl?arch=arm64&label=)](https://hub.docker.com/r/kokuwaio/buildctl) |
-| [moby/buildkit](https://hub.docker.com/r/moby/buildkit)         | not a Woodpecker plugin           | [![size](https://img.shields.io/docker/image-size/moby/buildkit?arch=amd64&label=)](https://hub.docker.com/r/moby/buildkit) | [![size](https://img.shields.io/docker/image-size/moby/buildkit?arch=arm64&label=)](https://hub.docker.com/r/moby/buildkit) |
+| [moby/buildkit](https://hub.docker.com/r/moby/buildkit)         | not a Woodpecker plugin           | [![size](https://img.shields.io/docker/image-size/moby/buildkit?arch=amd64&label=)](https://hub.docker.com/r/moby/buildkit)         | [![size](https://img.shields.io/docker/image-size/moby/buildkit?arch=arm64&label=)](https://hub.docker.com/r/moby/buildkit)         |
 | [nordseth/buildctl](https://hub.docker.com/r/nordseth/buildctl) | not a Woodpecker plugin           | [![size](https://img.shields.io/docker/image-size/nordseth/buildctl?arch=amd64&label=)](https://hub.docker.com/r/nordseth/buildctl) | [![size](https://img.shields.io/docker/image-size/nordseth/buildctl?arch=arm64&label=)](https://hub.docker.com/r/nordseth/buildctl) |
 | [shopstic/buildctl](https://hub.docker.com/r/shopstic/buildctl) | not a Woodpecker plugin, outdated | [![size](https://img.shields.io/docker/image-size/shopstic/buildctl?arch=amd64&label=)](https://hub.docker.com/r/shopstic/buildctl) | [![size](https://img.shields.io/docker/image-size/shopstic/buildctl?arch=arm64&label=)](https://hub.docker.com/r/shopstic/buildctl) |
-| [agisoft/buildctl](https://hub.docker.com/r/agisoft/buildctl)   | not a Woodpecker plugin, outdated | [![size](https://img.shields.io/docker/image-size/agisoft/buildctl?arch=amd64&label=)](https://hub.docker.com/r/agisoft/buildctl) | [![size](https://img.shields.io/docker/image-size/agisoft/buildctl?arch=arm64&label=)](https://hub.docker.com/r/agisoft/buildctl) |
+| [agisoft/buildctl](https://hub.docker.com/r/agisoft/buildctl)   | not a Woodpecker plugin, outdated | [![size](https://img.shields.io/docker/image-size/agisoft/buildctl?arch=amd64&label=)](https://hub.docker.com/r/agisoft/buildctl)   | [![size](https://img.shields.io/docker/image-size/agisoft/buildctl?arch=arm64&label=)](https://hub.docker.com/r/agisoft/buildctl)   |
