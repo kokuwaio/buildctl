@@ -3,7 +3,7 @@
 # hadolint only uses default locations https://github.com/hadolint/hadolint/issues/977
 # hadolint global ignore=DL4006
 
-FROM docker.io/library/bash:5.3.8@sha256:84e9597a44c52678823f5292b595004b0bccc722092b0764cb4269e2859f540a
+FROM docker.io/library/bash:5.3.9@sha256:df9684c6e2a1fdc5f99ce7472de257d3d26d052547481fb00341d0d0df291e8d
 SHELL ["/usr/local/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 
 # workaround until we have a env `CI_COMMIT_TIMESTAMP`
