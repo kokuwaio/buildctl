@@ -1,7 +1,7 @@
 when:
   event: [manual, push, pull_request]
   branch: main
-  path: [.woodpecker/lint.yaml, renovate.json, Dockerfile, "**/*.yaml", "**/*.md", "**/*.sh"]
+  path: [.woodpecker/lint.yaml, renovate.json, Dockerfile, .justfile, "**/*.yaml", "**/*.md", "**/*.sh"]
 
 steps:
 
@@ -14,6 +14,11 @@ steps:
     image: kokuwaio/hadolint:v2.14.0
     depends_on: []
     when: [path: [.woodpecker/lint.yaml, Dockerfile]]
+
+  just:
+    image: kokuwaio/just:1.44.0
+    depends_on: []
+    when: [path: [.woodpecker/lint.yaml, .justfile]]
 
   yaml:
     image: kokuwaio/yamllint:v1.37.1

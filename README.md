@@ -7,7 +7,7 @@
 [![prs](https://img.shields.io/gitea/pull-requests/open/woodpecker/buildctl?gitea_url=https%3A%2F%2Fgit.kokuwa.io)](https://git.kokuwa.io/woodpecker/buildctl/pulls)
 [![issues](https://img.shields.io/gitea/issues/open/woodpecker/buildctl?gitea_url=https%3A%2F%2Fgit.kokuwa.io)](https://git.kokuwa.io/woodpecker/buildctl/issues)
 
-A [WoodpeckerCI](https://woodpecker-ci.org) plugin for [buildctl](https://github.com/moby/buildkit) to build container images using a remote buildkit host.
+A [WoodpeckerCI](https://woodpecker-ci.org) plugin for [buildctl](https://github.com/moby/buildkit) to build container images using a remote buildkit host.  
 Also usable with Gitlab, Github or locally, see examples for usage.
 
 ## Features
@@ -38,11 +38,11 @@ steps:
       platform: [linux/amd64, linux/arm64]
       auth:
         registry.example.org:
-          username: { from_secret: my_username }
-          password: { from_secret: my_password }
+          username: {from_secret: my_username}
+          password: {from_secret: my_password}
         https://index.docker.io/v1/":
-          username: { from_secret: docker_io_username }
-          password: { from_secret: docker_io_password }
+          username: {from_secret: docker_io_username}
+          password: {from_secret: docker_io_password}
 ```
 
 Gitlab: (using script is needed because of <https://gitlab.com/gitlab-org/gitlab/-/issues/19717>)
