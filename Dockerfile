@@ -8,7 +8,7 @@ SHELL ["/usr/local/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 
 # workaround until we have a env `CI_COMMIT_TIMESTAMP`
 # see https://github.com/woodpecker-ci/woodpecker/issues/5245
-RUN apk add git~=2 --no-cache
+RUN apk add git~=2 --no-cache --no-scripts
 
 ARG TARGETARCH
 RUN wget -q "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$TARGETARCH" --output-document=/usr/local/bin/jq && \
