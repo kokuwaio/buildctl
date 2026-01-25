@@ -44,10 +44,11 @@ fi
 ## build command
 ##
 
-COMMAND="buildctl build"
+COMMAND="buildctl"
 if [[ -n "${PLUGIN_ADDR:-}" ]]; then
 	COMMAND+=" --addr=$PLUGIN_ADDR"
 fi
+COMMAND+=" build"
 COMMAND+=" --frontend=$BUILDCTL_FRONTEND"
 COMMAND+=" --local=context=$BUILDCTL_CONTEXT"
 COMMAND+=" --local=dockerfile=$BUILDCTL_DOCKERFILE"
