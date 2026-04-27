@@ -24,7 +24,7 @@ WoodpeckerCI:
 steps:
   buildctl:
     depends_on: []
-    image: kokuwaio/buildctl:v0.24.0
+    image: kokuwaio/buildctl:v0.29.0
     settings:
       name:
         - registry.example.org/foo:latest
@@ -52,7 +52,7 @@ buildctl:
   needs: []
   stage: lint
   image:
-    name: kokuwaio/buildctbuildctl:v0.24.0
+    name: kokuwaio/buildctl:v0.29.0
     entrypoint: [""]
   script: [/usr/local/bin/entrypoint.sh]
   variables:
@@ -85,7 +85,7 @@ docker run --rm --user=$(id -u) --volume=$HOME:$HOME:ro --workdir=$PWD --env=PLU
 | `build-args`        | PLUGIN_BUILD_ARGS        | `none`                      | Build args to pass to build                        |
 | `platform`          | PLUGIN_PLATFORM          | `none`                      | Target platform for container image.               |
 | `reproducible`      | PLUGIN_REPRODUCIBLE      | `true`                      | Build with reproducible settings.                  |
-| `source-epoch-date` | PLUGIN_SOURCE_DATE_EPOCH | `git log -1 --format="%at"` | Timestamp to use for reproducible builds.          |
+| `source-date-epoch` | PLUGIN_SOURCE_DATE_EPOCH | `git log -1 --format="%at"` | Timestamp to use for reproducible builds.          |
 | `name`              | PLUGIN_NAME              | `none`                      | Images names where to push the image.              |
 | `annotation`        | PLUGIN_ANNOTATION        | `none`                      | Annotations (also known as labels) to add to image |
 | `push`              | PLUGIN_PUSH              | `true`                      | Push images if output names are set.               |

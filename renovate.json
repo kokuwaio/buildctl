@@ -6,9 +6,7 @@
 			"customType": "regex",
 			"managerFilePatterns": ["README.md", "Dockerfile", ".woodpecker/build.yaml"],
 			"matchStrings": [
-				"- registry.kokuwa.io/kokuwaio/buildctl:(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
-				"- docker.io/kokuwaio/buildctl:(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
-				"- ghcr.io/kokuwaio/buildctl:(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
+				"kokuwaio/buildctl:(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
 				"org.opencontainers.image.version: (?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
 				"github.com/moby/buildkit/releases/download/(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)/buildkit-v[0-9]+\\.[0-9]+\\.[0-9]+.linux-\\$SUFFIX.tar.gz",
 				"github.com/moby/buildkit/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+/buildkit-(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+).linux-\\$SUFFIX.tar.gz"
