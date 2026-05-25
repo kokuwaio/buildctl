@@ -6,14 +6,15 @@
 			"customType": "regex",
 			"managerFilePatterns": ["README.md", "Dockerfile", ".woodpecker/build.yaml"],
 			"matchStrings": [
-				"kokuwaio/buildctl:(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
+				"io/kokuwaio/buildctl:(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
 				"org.opencontainers.image.version: (?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
-				"github.com/moby/buildkit/releases/download/(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)/buildkit-v[0-9]+\\.[0-9]+\\.[0-9]+.linux-\\$SUFFIX.tar.gz",
-				"github.com/moby/buildkit/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+/buildkit-(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+).linux-\\$SUFFIX.tar.gz"
+				"github.com/moby/buildkit/releases/download/(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)/buildkit-v[0-9]+\\.[0-9]+\\.[0-9]+.linux-\\$TARGETARCH.tar.gz",
+				"github.com/moby/buildkit/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+/buildkit-(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+).linux-\\$TARGETARCH.tar.gz"
 			],
 			"datasourceTemplate": "github-releases",
 			"packageNameTemplate": "moby/buildkit"
-		},{
+		},
+		{
 			"customType": "regex",
 			"managerFilePatterns": ["Dockerfile"],
 			"matchStrings": ["github.com/jqlang/jq/releases/download/(?<currentValue>jq-[0-9]+\\.[0-9]+\\.[0-9]+)/jq-linux-\\$SUFFIX"],
