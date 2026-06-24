@@ -14,7 +14,7 @@ ARG TARGETARCH
 RUN wget -q "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$TARGETARCH" --output-document=/usr/local/bin/jq && \
 	chmod 555 /usr/local/bin/jq
 
-RUN wget -q "https://github.com/moby/buildkit/releases/download/v0.31.0/buildkit-v0.31.0.linux-$TARGETARCH.tar.gz" --output-document=- | \
+RUN wget -q "https://github.com/moby/buildkit/releases/download/v0.31.1/buildkit-v0.31.1.linux-$TARGETARCH.tar.gz" --output-document=- | \
 	tar --gz --extract --directory=/usr/local bin/buildctl && \
 	chmod 555 /usr/local/bin/buildctl
 
