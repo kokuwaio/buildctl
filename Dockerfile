@@ -6,8 +6,8 @@ SHELL ["/usr/local/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 ARG TARGETARCH
 
 RUN wget --quiet \
-        "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$TARGETARCH" \
-        "https://github.com/jqlang/jq/releases/download/jq-1.8.1/sha256sum.txt" && \
+        "https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-linux-$TARGETARCH" \
+        "https://github.com/jqlang/jq/releases/download/jq-1.8.2/sha256sum.txt" && \
     grep "jq-linux-$TARGETARCH" sha256sum.txt | sha256sum -csw && rm sha256sum.txt && \
     mv "jq-linux-$TARGETARCH" /usr/local/bin/jq && chmod 555 /usr/local/bin/jq
 
