@@ -54,7 +54,7 @@ buildctl:
   image:
     name: kokuwaio/buildctl:v0.29.0
     entrypoint: [""]
-  script: [/usr/local/bin/entrypoint.sh]
+  script: /usr/local/bin/entrypoint.sh
   variables:
     PLUGIN_ADDR: tcp://0.8.1.5:1234
     PLUGIN_NAME: registry.example.org/foo:latest,registry.example.org/foo:0.0.1
@@ -75,29 +75,30 @@ docker run --rm --user=$(id -u) --volume=$HOME:$HOME:ro --workdir=$PWD --env=PLU
 
 ## Settings
 
-| Settings Name       | Environment              | Default                     | Description                                        |
-| ------------------- | ------------------------ | --------------------------- | -------------------------------------------------- |
-| `addr`              | PLUGIN_ADDR              | `$BUILDKIT_HOST`            | Buildkit host to use.                              |
-| `frontend`          | PLUGIN_FRONTEND          | `dockerfile.v0`             | Only dockerfile frontend supported right now       |
-| `context`           | PLUGIN_CONTEXT           | `$PWD`                      | Context directory to use for build                 |
-| `dockerfile`        | PLUGIN_DOCKERFILE        | `Dockerfile`                | Dockerfile to use.                                 |
-| `target`            | PLUGIN_TARGET            | `none`                      | Dockerfile target                                  |
-| `build-args`        | PLUGIN_BUILD_ARGS        | `none`                      | Build args to pass to build                        |
-| `platform`          | PLUGIN_PLATFORM          | `none`                      | Target platform for container image.               |
-| `reproducible`      | PLUGIN_REPRODUCIBLE      | `true`                      | Build with reproducible settings.                  |
-| `source-date-epoch` | PLUGIN_SOURCE_DATE_EPOCH | `git log -1 --format="%at"` | Timestamp to use for reproducible builds.          |
-| `name`              | PLUGIN_NAME              | `none`                      | Images names where to push the image.              |
-| `annotation`        | PLUGIN_ANNOTATION        | `none`                      | Annotations (also known as labels) to add to image |
-| `push`              | PLUGIN_PUSH              | `true`                      | Push images if output names are set.               |
-| `auth`              | PLUGIN_AUTH              | `none`                      | Auth for private registries                        |
-| `env-file`          | PLUGIN_ENV_FILE          | `none`                      | Source environment values from given file          |
+| Settings Name       | Environment              | Default          | Description                                        |
+| ------------------- | ------------------------ | ---------------- | -------------------------------------------------- |
+| `addr`              | PLUGIN_ADDR              | `$BUILDKIT_HOST` | Buildkit host to use.                              |
+| `frontend`          | PLUGIN_FRONTEND          | `dockerfile.v0`  | Only dockerfile frontend supported right now       |
+| `context`           | PLUGIN_CONTEXT           | `$PWD`           | Context directory to use for build                 |
+| `dockerfile`        | PLUGIN_DOCKERFILE        | `Dockerfile`     | Dockerfile to use.                                 |
+| `target`            | PLUGIN_TARGET            | `none`           | Dockerfile target                                  |
+| `build-args`        | PLUGIN_BUILD_ARGS        | `none`           | Build args to pass to build                        |
+| `platform`          | PLUGIN_PLATFORM          | `none`           | Target platform for container image.               |
+| `reproducible`      | PLUGIN_REPRODUCIBLE      | `true`           | Build with reproducible settings.                  |
+| `source-date-epoch` | PLUGIN_SOURCE_DATE_EPOCH | `0`              | Timestamp to use for reproducible builds.          |
+| `name`              | PLUGIN_NAME              | `none`           | Images names where to push the image.              |
+| `annotation`        | PLUGIN_ANNOTATION        | `none`           | Annotations (also known as labels) to add to image |
+| `push`              | PLUGIN_PUSH              | `true`           | Push images if output names are set.               |
+| `auth`              | PLUGIN_AUTH              | `none`           | Auth for private registries                        |
+| `env-file`          | PLUGIN_ENV_FILE          | `none`           | Source environment values from given file          |
 
 ## Alternatives
 
 | Image                                                           | Comment                           |                                                                amd64                                                                |                                                                arm64                                                                |
 | --------------------------------------------------------------- | --------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------: |
 | [kokuwaio/buildctl](https://hub.docker.com/r/kokuwaio/buildctl) | Woodpecker plugin                 | [![size](https://img.shields.io/docker/image-size/kokuwaio/buildctl?arch=amd64&label=)](https://hub.docker.com/r/kokuwaio/buildctl) | [![size](https://img.shields.io/docker/image-size/kokuwaio/buildctl?arch=arm64&label=)](https://hub.docker.com/r/kokuwaio/buildctl) |
-| [moby/buildkit](https://hub.docker.com/r/moby/buildkit)         | not a Woodpecker plugin           | [![size](https://img.shields.io/docker/image-size/moby/buildkit?arch=amd64&label=)](https://hub.docker.com/r/moby/buildkit)         | [![size](https://img.shields.io/docker/image-size/moby/buildkit?arch=arm64&label=)](https://hub.docker.com/r/moby/buildkit)         |
+| [moby/buildkit](https://hub.docker.com/r/moby/buildkit)         | not a Woodpecker plugin           |     [![size](https://img.shields.io/docker/image-size/moby/buildkit?arch=amd64&label=)](https://hub.docker.com/r/moby/buildkit)     |     [![size](https://img.shields.io/docker/image-size/moby/buildkit?arch=arm64&label=)](https://hub.docker.com/r/moby/buildkit)     |
 | [nordseth/buildctl](https://hub.docker.com/r/nordseth/buildctl) | not a Woodpecker plugin           | [![size](https://img.shields.io/docker/image-size/nordseth/buildctl?arch=amd64&label=)](https://hub.docker.com/r/nordseth/buildctl) | [![size](https://img.shields.io/docker/image-size/nordseth/buildctl?arch=arm64&label=)](https://hub.docker.com/r/nordseth/buildctl) |
 | [shopstic/buildctl](https://hub.docker.com/r/shopstic/buildctl) | not a Woodpecker plugin, outdated | [![size](https://img.shields.io/docker/image-size/shopstic/buildctl?arch=amd64&label=)](https://hub.docker.com/r/shopstic/buildctl) | [![size](https://img.shields.io/docker/image-size/shopstic/buildctl?arch=arm64&label=)](https://hub.docker.com/r/shopstic/buildctl) |
-| [agisoft/buildctl](https://hub.docker.com/r/agisoft/buildctl)   | not a Woodpecker plugin, outdated | [![size](https://img.shields.io/docker/image-size/agisoft/buildctl?arch=amd64&label=)](https://hub.docker.com/r/agisoft/buildctl)   | [![size](https://img.shields.io/docker/image-size/agisoft/buildctl?arch=arm64&label=)](https://hub.docker.com/r/agisoft/buildctl)   |
+| [agisoft/buildctl](https://hub.docker.com/r/agisoft/buildctl)   | not a Woodpecker plugin, outdated |  [![size](https://img.shields.io/docker/image-size/agisoft/buildctl?arch=amd64&label=)](https://hub.docker.com/r/agisoft/buildctl)  |  [![size](https://img.shields.io/docker/image-size/agisoft/buildctl?arch=arm64&label=)](https://hub.docker.com/r/agisoft/buildctl)  |
+| [tikivn/buildctl](https://hub.docker.com/r/tikivn/buildctl)     | not a Woodpecker plugin, outdated |  [![size](https://img.shields.io/docker/image-size/tikivn/buildctl?arch=amd64&label=)](https://hub.docker.com/r/tikivn/buildctl)    |  [![size](https://img.shields.io/docker/image-size/tikivn/buildctl?arch=arm64&label=)](https://hub.docker.com/r/tikivn/buildctl)    |

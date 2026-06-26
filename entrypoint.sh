@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 set -eu;
 
-## workaround until we have a env `CI_COMMIT_TIMESTAMP`
-## see https://github.com/woodpecker-ci/woodpecker/issues/5245
-if [[ -z "${CI_COMMIT_TIMESTAMP:-}" ]]; then
-	git config --global --add safe.directory "$CI_WORKSPACE"
-	CI_COMMIT_TIMESTAMP=$(git log -1 --format="%at")
-fi
-
 ##
 ## check input
 ##
@@ -62,7 +55,7 @@ if [[ -n  "${PLUGIN_BUILD_ARGS:-}" ]]; then
 	COMMAND+="$(eval "echo \"${PLUGIN_BUILD_ARGS//\"/\\\"}\"" | jq --join-output 'keys[] as $k|" --opt=build-arg:\($k)=\(.[$k])"')"
 fi
 if [[ "${PLUGIN_REPRODUCIBLE:-true}" == "true" ]]; then
-	COMMAND+=" --opt=build-arg:SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-$CI_COMMIT_TIMESTAMP}"
+	COMMAND+=" --opt=build-arg:SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-0}"
 fi
 
 # https://github.com/moby/buildkit/blob/master/README.md#output

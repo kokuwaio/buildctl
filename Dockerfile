@@ -1,18 +1,15 @@
-# ignore pipefail because
-# bash is non-default location https://github.com/tianon/docker-bash/issues/29
-# hadolint only uses default locations https://github.com/hadolint/hadolint/issues/977
+# hadolint shell=/usr/local/bin/bash
 # hadolint global ignore=DL4006
 
 FROM docker.io/library/bash:5.3.15@sha256:a19c811ee9e97fa8a080001d82b8e0ded303f0795cffdb1cbd162731bc8ce208
 SHELL ["/usr/local/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
-
-# workaround until we have a env `CI_COMMIT_TIMESTAMP`
-# see https://github.com/woodpecker-ci/woodpecker/issues/5245
-RUN apk add git~=2 --no-cache --no-scripts
-
 ARG TARGETARCH
-RUN wget -q "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$TARGETARCH" --output-document=/usr/local/bin/jq && \
-	chmod 555 /usr/local/bin/jq
+
+RUN wget --quiet \
+        "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$TARGETARCH" \
+        "https://github.com/jqlang/jq/releases/download/jq-1.8.1/sha256sum.txt" && \
+    grep "jq-linux-$TARGETARCH" sha256sum.txt | sha256sum -csw && rm sha256sum.txt && \
+    mv "jq-linux-$TARGETARCH" /usr/local/bin/jq && chmod 555 /usr/local/bin/jq
 
 RUN wget -q "https://github.com/moby/buildkit/releases/download/v0.31.1/buildkit-v0.31.1.linux-$TARGETARCH.tar.gz" --output-document=- | \
 	tar --gz --extract --directory=/usr/local bin/buildctl && \

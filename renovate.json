@@ -1,15 +1,21 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["kokuwaio/renovate-config"],
+	"packageRules": [
+		{
+			"matchPackageNames": ["moby/buildkit", "jqlang/jq"],
+			"automerge": true
+		}
+	],
 	"customManagers": [
 		{
 			"customType": "regex",
 			"managerFilePatterns": ["README.md", "Dockerfile", ".woodpecker/build.yaml"],
 			"matchStrings": [
-				"io/kokuwaio/buildctl:(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
-				"org.opencontainers.image.version: (?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)",
-				"github.com/moby/buildkit/releases/download/(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)/buildkit-v[0-9]+\\.[0-9]+\\.[0-9]+.linux-\\$TARGETARCH.tar.gz",
-				"github.com/moby/buildkit/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+/buildkit-(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+).linux-\\$TARGETARCH.tar.gz"
+				"io/kokuwaio/buildctl:(?<currentValue>v\\d+\\.\\d+\\.\\d+)",
+				"org.opencontainers.image.version: (?<currentValue>v\\d+\\.\\d+\\.\\d+)",
+				"github.com/moby/buildkit/releases/download/(?<currentValue>v\\d+\\.\\d+\\.\\d+)/buildkit-v\\d+\\.\\d+\\.\\d+.linux-\\$TARGETARCH.tar.gz",
+				"github.com/moby/buildkit/releases/download/v\\d+\\.\\d+\\.\\d+/buildkit-(?<currentValue>v\\d+\\.\\d+\\.\\d+).linux-\\$TARGETARCH.tar.gz"
 			],
 			"datasourceTemplate": "github-releases",
 			"packageNameTemplate": "moby/buildkit"
@@ -17,10 +23,10 @@
 		{
 			"customType": "regex",
 			"managerFilePatterns": ["Dockerfile"],
-			"matchStrings": ["github.com/jqlang/jq/releases/download/(?<currentValue>jq-[0-9]+\\.[0-9]+\\.[0-9]+)/jq-linux-\\$SUFFIX"],
+			"matchStrings": ["github.com/jqlang/jq/releases/download/(?<currentValue>jq-\\d+\\.\\d+\\.\\d+)/"],
 			"datasourceTemplate": "github-releases",
 			"packageNameTemplate": "jqlang/jq",
-			"versioningTemplate": "regex:^jq-?(?<major>[0-9]+)\\.(?<minor>[0-9]+)\\.(?<patch>[0-9]+)?$"
+			"versioningTemplate": "regex:^jq-?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$"
 		}
 	]
 }
