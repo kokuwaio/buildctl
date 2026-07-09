@@ -14,7 +14,7 @@ if [[ -n "${PLUGIN_ENV_FILE:-}" ]]; then
 	source "$PLUGIN_ENV_FILE"
 fi
 
-BUILDCTL_CONTEXT=${PLUGIN_CONTEXT:-$(pwd)}
+BUILDCTL_CONTEXT=${PLUGIN_CONTEXT:-.}
 BUILDCTL_DOCKERFILE=$(dirname "${PLUGIN_DOCKERFILE:-$BUILDCTL_CONTEXT/Dockerfile}")
 if [[ ! -f $BUILDCTL_DOCKERFILE/Dockerfile ]]; then
 	echo "Dockerfile $BUILDCTL_DOCKERFILE/Dockerfile not found!"
@@ -92,7 +92,7 @@ fi
 echo "    --no-cache \\"
 echo "    --provenance=false \\"
 if [[ "${PLUGIN_REPRODUCIBLE:-true}" == "true" ]]; then
-	echo "    --build-arg=SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-$CI_COMMIT_TIMESTAMP} \\"
+	echo "    --build-arg=SOURCE_DATE_EPOCH=${PLUGIN_SOURCE_DATE_EPOCH:-0} \\"
 fi
 if [[ -n  "${PLUGIN_PLATFORM:-}" ]]; then
 	echo "    --platform=$PLUGIN_PLATFORM \\"
