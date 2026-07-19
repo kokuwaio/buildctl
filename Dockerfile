@@ -11,7 +11,7 @@ RUN wget --quiet \
     grep "jq-linux-$TARGETARCH" sha256sum.txt | sha256sum -csw && rm sha256sum.txt && \
     mv "jq-linux-$TARGETARCH" /usr/local/bin/jq && chmod 555 /usr/local/bin/jq
 
-RUN wget -q "https://github.com/moby/buildkit/releases/download/v0.31.1/buildkit-v0.31.1.linux-$TARGETARCH.tar.gz" --output-document=- | \
+RUN wget -q "https://github.com/moby/buildkit/releases/download/v0.31.2/buildkit-v0.31.2.linux-$TARGETARCH.tar.gz" --output-document=- | \
 	tar --gz --extract --directory=/usr/local bin/buildctl && \
 	chmod 555 /usr/local/bin/buildctl
 
