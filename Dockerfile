@@ -1,7 +1,7 @@
 # hadolint shell=/usr/local/bin/bash
 # hadolint global ignore=DL4006
 
-FROM docker.io/library/bash:5.3.20@sha256:61962062d969cb46dfc2bad061d36342406fa485f64f246aa7e95693ca07df1f
+FROM docker.io/library/bash:5.3.20@sha256:ab2ada570d744f42f517986fdd3c81ef60fe2054ed0c5295a7922e3b0ccd1b02
 SHELL ["/usr/local/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 ARG TARGETARCH
 
